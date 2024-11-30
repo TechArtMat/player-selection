@@ -9,10 +9,10 @@ interface AppState {
   previousTeamB: PlayerData[];
   rerollAttempts: number;
 
-  setAvailablePlayers: (players: PlayerData[]) => void;
-  // setAvailablePlayers: React.Dispatch<React.SetStateAction<PlayerData[]>>;
-  setCurrentTeamA: (team: PlayerData[]) => void;
-  setCurrentTeamB: (team: PlayerData[]) => void;
+  // setAvailablePlayers: (players: PlayerData[]) => void;
+  setAvailablePlayers: React.Dispatch<React.SetStateAction<PlayerData[]>>;
+  setCurrentTeamA: React.Dispatch<React.SetStateAction<PlayerData[]>>;
+  setCurrentTeamB: React.Dispatch<React.SetStateAction<PlayerData[]>>;
   incrementRerollAttempts: () => void;
 }
 
