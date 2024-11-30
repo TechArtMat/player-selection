@@ -2,7 +2,7 @@ import { parsePlayerData } from "./parsePlayerData";
 import data from "./playersData.tsv?raw";
 import styles from "./PlayersList.module.css";
 import { useAppContext } from "./AppContext";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { PlayerData } from "./types/PlayerData";
 
 export function PlayersList() {
@@ -14,6 +14,13 @@ export function PlayersList() {
     currentTeamB,
     setCurrentTeamB,
   } = useAppContext();
+  useEffect(() => {
+    const parseData = parsePlayerData(data);
+    setAvailablePlayers(parseData);
+  }, []);
+
+  const [searchValue, setSearchValue] = useState("");
+
   useEffect(() => {
     const parseData = parsePlayerData(data);
     setAvailablePlayers(parseData);
@@ -32,13 +39,31 @@ export function PlayersList() {
     }
   };
 
+  const filteredPlayers = availablePlayers.filter((player) =>
+    player.name.toLowerCase().includes(searchValue.toLowerCase()),
+  );
+
   return (
-    <ul className={styles.list}>
-      {availablePlayers.map((playerData) => (
-        <li key={playerData.name} onClick={() => addToTeam(playerData)}>
-          {playerData.name} {playerData.kdTrials}
-        </li>
-      ))}
-    </ul>
+    <div>
+      <div>
+        <label>
+          Search Players:
+          <input
+            type="text"
+            value={searchValue}
+            onChange={(e) => setSearchValue(e.target.value)}
+            placeholder="Search by name..."
+          />
+        </label>
+      </div>
+
+      <ul className={styles.list}>
+        {filteredPlayers.map((playerData) => (
+          <li key={playerData.name} onClick={() => addToTeam(playerData)}>
+            {playerData.name} {playerData.kdTrials}
+          </li>
+        ))}
+      </ul>
+    </div>
   );
 }
