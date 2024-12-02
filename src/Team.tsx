@@ -1,13 +1,11 @@
 import { PlayerData } from "./types/PlayerData";
-import { sortPlayers } from "./sortPlayer";
 
 type TeamProps = {
   players: PlayerData[];
   onRemove: (player: PlayerData) => void;
+  onSwitch: (player: PlayerData) => void;
   name?: string;
 };
-
-// sortPlayers()
 
 export function Team(props: TeamProps) {
   const averageKD =
@@ -22,11 +20,11 @@ export function Team(props: TeamProps) {
       <ul>
         {props.players.map((playerData) => {
           return (
-            <li
-              key={playerData.name}
-              onClick={() => props.onRemove(playerData)}
-            >
-              {playerData.name} {playerData.kdTrials}
+            <li key={playerData.name}>
+              <div onClick={() => props.onRemove(playerData)}>
+                {playerData.name} {playerData.kdTrials}
+              </div>
+              <button onClick={() => props.onSwitch(playerData)}>Switch</button>
             </li>
           );
         })}

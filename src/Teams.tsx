@@ -19,8 +19,18 @@ export function Teams() {
   const [maxValue, setMaxValue] = useState(0.5);
 
   const teamsConfig = [
-    { players: currentTeamA, setTeam: setCurrentTeamA },
-    { players: currentTeamB, setTeam: setCurrentTeamB },
+    {
+      players: currentTeamA,
+      setTeam: setCurrentTeamA,
+      otherTeam: currentTeamB,
+      setOtherTeam: setCurrentTeamB,
+    },
+    {
+      players: currentTeamB,
+      setTeam: setCurrentTeamB,
+      otherTeam: currentTeamA,
+      setOtherTeam: setCurrentTeamA,
+    },
   ];
 
   const shuffleArray = (array: PlayerData[]) => {
@@ -55,6 +65,18 @@ export function Teams() {
     calculateAverageKD(currentTeamA) - calculateAverageKD(currentTeamB),
   );
 
+  const handleSwitchPlayer =
+    (
+      fromTeam: PlayerData[],
+      setFromTeam: (players: PlayerData[]) => void,
+      toTeam: PlayerData[],
+      setToTeam: (players: PlayerData[]) => void,
+    ) =>
+    (playerToSwitch: PlayerData) => {
+      setFromTeam(fromTeam.filter((player) => player !== playerToSwitch));
+      setToTeam([...toTeam, playerToSwitch]);
+    };
+
   useEffect(() => {
     if (kdDifference <= minValue || kdDifference >= maxValue) {
       handleShuffleTeams();
@@ -64,14 +86,22 @@ export function Teams() {
   return (
     <div>
       <div>
-        {teamsConfig.map(({ players, setTeam }, index) => (
-          <div key={index} className={styles.list}>
-            <Team
-              players={players}
-              onRemove={handleRemovePlayer(players, setTeam)}
-            />
-          </div>
-        ))}
+        {teamsConfig.map(
+          ({ players, setTeam, otherTeam, setOtherTeam }, index) => (
+            <div key={index} className={styles.list}>
+              <Team
+                players={players}
+                onRemove={handleRemovePlayer(players, setTeam)}
+                onSwitch={handleSwitchPlayer(
+                  players,
+                  setTeam,
+                  otherTeam,
+                  setOtherTeam,
+                )}
+              />
+            </div>
+          ),
+        )}
       </div>
       <br />
       <p>K/D Difference: {kdDifference.toFixed(2)}</p>
