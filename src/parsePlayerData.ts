@@ -6,34 +6,20 @@ export function parsePlayerData(baseText: string) {
   const lines = baseText.split("\n");
 
   lines.forEach((line) => {
-    if (line.includes("#")) {
-      // eslint-disable-next-line prefer-const
-      let [name, other] = line.split("#");
-      if (!other) return;
+    // eslint-disable-next-line prefer-const
+    let [name, other] = line.split("#");
 
-      const parts = other.split("\t");
-      name = name + "#" + (parts[0] || "");
-      const [clanTag, kdTrials, kdCrucible] = parts.slice(1);
+    const parts = other.split("\t");
+    name = name + "#" + parts[0];
+    const [clanTag, kdTrials, kdCrucible] = parts.slice(1);
 
-      const player = {
-        name,
-        clanTag,
-        kdTrials: parseFloat(kdTrials) || 0,
-        kdCrucible: parseFloat(kdCrucible) || 0,
-      };
-      parsedPlayers.push(player);
-    } else {
-      const parts = line.split(/\s+/);
-      const [name, clanTag, kdTrials, kdCrucible] = parts;
-
-      const player = {
-        name,
-        clanTag,
-        kdTrials: parseFloat(kdTrials) || 0,
-        kdCrucible: parseFloat(kdCrucible) || 0,
-      };
-      parsedPlayers.push(player);
-    }
+    const player = {
+      name,
+      clanTag,
+      kdTrials: parseFloat(kdTrials),
+      kdCrucible: parseFloat(kdCrucible),
+    };
+    parsedPlayers.push(player);
   });
   sortPlayers(parsedPlayers);
 
