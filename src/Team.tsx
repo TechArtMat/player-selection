@@ -4,7 +4,8 @@ type TeamProps = {
   players: PlayerData[];
   onRemove: (player: PlayerData) => void;
   onSwitch: (player: PlayerData) => void;
-  name?: string;
+  onLockToggle: (player: PlayerData) => void;
+  name: string;
 };
 
 export function Team(props: TeamProps) {
@@ -20,11 +21,25 @@ export function Team(props: TeamProps) {
       <ul>
         {props.players.map((playerData) => {
           return (
-            <li key={playerData.name}>
+            <li
+              key={playerData.name}
+              data-testid={`player-${playerData.name.replace(/\s/g, "-")}`}
+            >
               <div onClick={() => props.onRemove(playerData)}>
                 {playerData.name} {playerData.kdTrials}
               </div>
-              <button onClick={() => props.onSwitch(playerData)}>Switch</button>
+              <button
+                data-testid={`lock-player-button-${playerData.name.replace(/\s/g, "-")}`}
+                onClick={() => props.onLockToggle(playerData)}
+              >
+                {playerData.isLocked ? "Unlock" : "Lock"}
+              </button>
+              <button
+                data-testid={`change-team-button-${playerData.name.replace(/\s/g, "-")}`}
+                onClick={() => props.onSwitch(playerData)}
+              >
+                Switch
+              </button>
             </li>
           );
         })}
