@@ -72,7 +72,7 @@ export function PlayersList() {
   return (
     <div>
       <div>
-        <label>
+        <label data-testid="search-players-input">
           Search Players:
           <input
             type="text"
@@ -83,9 +83,13 @@ export function PlayersList() {
         </label>
       </div>
 
-      <ul className={styles.list}>
+      <ul className={styles.list} data-testid="available-players-list">
         {filteredPlayers.map((playerData) => (
-          <li key={playerData.name} onClick={() => addToTeam(playerData)}>
+          <li
+            data-testid="player-row"
+            key={playerData.name}
+            onClick={() => addToTeam(playerData)}
+          >
             {playerData.name} {playerData.kdTrials}
           </li>
         ))}
@@ -94,16 +98,23 @@ export function PlayersList() {
       <div>
         <h3>Import Players Base</h3>
         <textarea
+          data-testid="players-base-input"
           value={textareaData}
           onChange={(e) => setTextareaData(e.target.value)}
           placeholder="Enter players in format: Name ClanTag K/DTrials K/DCrucible"
         ></textarea>
-        <button onClick={handleImportFromTextarea}>Import Players</button>
+        <button
+          data-testid="players-base-submit-button"
+          onClick={handleImportFromTextarea}
+        >
+          Import Players
+        </button>
       </div>
 
       <div>
         <h3>Import Player</h3>
         <input
+          data-testid="name-input"
           type="text"
           value={inputPlayer.name}
           onChange={(e) =>
@@ -112,6 +123,7 @@ export function PlayersList() {
           placeholder="Name"
         />
         <input
+          data-testid="clanTag-input"
           type="text"
           value={inputPlayer.clanTag}
           onChange={(e) =>
@@ -120,30 +132,34 @@ export function PlayersList() {
           placeholder="Clan Tag"
         />
         <input
+          data-testid="kdTrials-input"
           type="number"
           value={inputPlayer.kdTrials}
           step={0.1}
           onChange={(e) =>
             setInputPlayer({
               ...inputPlayer,
-              kdTrials: parseFloat(e.target.value) || 0,
+              kdTrials: parseFloat(e.target.value),
             })
           }
           placeholder="K/D Trials"
         />
         <input
+          data-testid="kdCrucible-input"
           type="number"
           value={inputPlayer.kdCrucible}
           step={0.1}
           onChange={(e) =>
             setInputPlayer({
               ...inputPlayer,
-              kdCrucible: parseFloat(e.target.value) || 0,
+              kdCrucible: parseFloat(e.target.value),
             })
           }
           placeholder="K/D Crucible"
         />
-        <button onClick={importFromInputs}>Add Player</button>
+        <button data-testid="submit-button" onClick={importFromInputs}>
+          Add Player
+        </button>
       </div>
     </div>
   );
