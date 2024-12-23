@@ -1,10 +1,11 @@
-import styles from "./PlayersList.module.css";
+import styles from "./Teams.module.css";
 import { Team } from "./Team";
 import { useAppContext } from "./AppContext";
 import { PlayerData } from "./types/PlayerData";
 import { useEffect, useRef, useState } from "react";
 import { calculateAverageKD } from "./isBalanceValid";
 import { takeScreenshot } from "./takeScreenshot";
+import { useShuffleCriterion } from "./useShuffleCriterion";
 
 export function Teams() {
   const {
@@ -16,11 +17,11 @@ export function Teams() {
     availablePlayers,
   } = useAppContext();
 
+  const { shuffleCriterion, handleShuffleCriterionChange } =
+    useShuffleCriterion();
+
   const [minValue, setMinValue] = useState(0.01);
   const [maxValue, setMaxValue] = useState(0.5);
-  const [shuffleCriterion, setShuffleCriterion] = useState<
-    "kdTrials" | "kdCrucible"
-  >("kdTrials");
 
   const teamsConfig = [
     {
@@ -28,20 +29,18 @@ export function Teams() {
       setTeam: setCurrentTeamA,
       otherTeam: currentTeamB,
       setOtherTeam: setCurrentTeamB,
+      maxSlots: 6,
     },
     {
       players: currentTeamB,
       setTeam: setCurrentTeamB,
       otherTeam: currentTeamA,
       setOtherTeam: setCurrentTeamA,
+      maxSlots: 6,
     },
   ];
 
-  const teamNames = ["alpha", "bravo"];
-
-  const shuffleArray = (array: PlayerData[]) => {
-    return [...array].sort(() => Math.random() - 0.5);
-  };
+  const teamNames = ["Alpha", "Bravo"];
 
   const toggleLockPlayer = (
     player: PlayerData,
@@ -54,6 +53,10 @@ export function Teams() {
     setTeam(updatedPlayers);
   };
 
+  const shuffleArray = (array: PlayerData[]) => {
+    return [...array].sort(() => Math.random() - 0.5);
+  };
+
   const handleShuffleTeams = () => {
     const allPlayers = [...currentTeamA, ...currentTeamB];
     const lockedA = currentTeamA.filter((player) => player.isLocked);
@@ -61,9 +64,18 @@ export function Teams() {
     const unlockedPlayers = allPlayers.filter((player) => !player.isLocked);
     const shuffledUnlocked = shuffleArray(unlockedPlayers);
 
-    const mid = Math.ceil(shuffledUnlocked.length / 2);
-    const newTeamA = [...lockedA, ...shuffledUnlocked.slice(0, mid)];
-    const newTeamB = [...lockedB, ...shuffledUnlocked.slice(mid)];
+    const targetLengthA = Math.floor(
+      (currentTeamA.length + currentTeamB.length) / 2,
+    );
+
+    const newTeamA = [
+      ...lockedA,
+      ...shuffledUnlocked.slice(0, targetLengthA - lockedA.length),
+    ];
+    const newTeamB = [
+      ...lockedB,
+      ...shuffledUnlocked.slice(targetLengthA - lockedA.length),
+    ];
 
     setCurrentTeamA(newTeamA);
     setCurrentTeamB(newTeamB);
@@ -112,17 +124,23 @@ export function Teams() {
   }, [kdDifference, minValue, maxValue]);
 
   return (
-    <div>
-      <div ref={teamWrapperRef} data-testid="teams-wrapper">
+    <div className={styles.teams}>
+      <div
+        className={styles.teamWrapper}
+        ref={teamWrapperRef}
+        data-testid="teams-wrapper"
+      >
         {teamsConfig.map(
           ({ players, setTeam, otherTeam, setOtherTeam }, index) => (
             <div
               key={index}
-              className={styles.list}
+              className={styles.team}
               data-testid={`team-${teamNames[index]}`}
             >
               <Team
                 players={players}
+                maxPlayers={6}
+                kdCriterion={shuffleCriterion}
                 onRemove={handleRemovePlayer(players, setTeam)}
                 onSwitch={handleSwitchPlayer(
                   players,
@@ -139,69 +157,92 @@ export function Teams() {
           ),
         )}
       </div>
-      <br />
-      <p>K/D Difference: {kdDifference.toFixed(2)}</p>
-      <br />
-      <div>
-        <label>
-          minValue
-          <input
-            type="range"
-            min="0"
-            max="1"
-            step="0.01"
-            data-testid="range-input-min"
-            value={minValue}
-            onChange={(e) => setMinValue(Number(e.target.value))}
-          />
-          <br />
-          {minValue}
-        </label>
-        <br />
-        <label>
-          maxValue
-          <input
-            data-testid="range-input-max"
-            type="range"
-            min="0"
-            max="1"
-            step="0.01"
-            value={maxValue}
-            onChange={(e) => setMaxValue(Number(e.target.value))}
-          />
-          <br />
-          {maxValue}
-        </label>
-        <br />
+      <div className={styles.tools}>
+        <p data-testid="kdDiff">K/D Difference: {kdDifference.toFixed(2)}</p>
         <div>
-          <label>
-            <input
-              type="radio"
-              name="shuffleCriterion"
-              value="kdTrials"
-              checked
-            />
-            K/D Trials
-          </label>
-          <label>
-            <input type="radio" name="shuffleCriterion" value="kdCrucible" />
-            K/D Crucible
-          </label>
+          <div className={styles.toolsBtnSliderWrapper}>
+            {/* <label className={styles.sliderText}>
+              minValue
+              <input
+                type="range"
+                min="0"
+                max="1"
+                step="0.01"
+                data-testid="range-input-min"
+                value={minValue}
+                onChange={(e) => setMinValue(Number(e.target.value))}
+              />
+              {minValue}
+            </label> */}
+            <label>
+              maxValue
+              <input
+                data-testid="range-input-max"
+                type="range"
+                min="0"
+                max="1"
+                step="0.01"
+                value={maxValue}
+                onChange={(e) => setMaxValue(Number(e.target.value))}
+              />
+              {maxValue}
+            </label>
+          </div>
+          <div className={styles.toolsBtnWrapper}>
+            <div className={styles.toolsBtnContainer}>
+              <button
+                className={`${styles.btnTrials} ${styles.toolsBtn} ${
+                  shuffleCriterion === "kdTrials" ? styles.active : ""
+                }`}
+                data-testid="radio-trials"
+                onClick={() => handleShuffleCriterionChange("kdTrials")}
+              ></button>
+              <div className={styles.radioBtnDec}></div>
+            </div>
+            <div className={styles.toolsBtnContainer}>
+              <button
+                className={`${styles.radioBtn} ${styles.btnCrucible} ${styles.toolsBtn} ${
+                  shuffleCriterion === "kdCrucible" ? styles.active : ""
+                }`}
+                data-testid="radio-crucible"
+                onClick={() => handleShuffleCriterionChange("kdCrucible")}
+              ></button>
+              <div className={styles.radioBtnDec}></div>
+            </div>
+          </div>
+          <div className={styles.toolsBtnWrapper}>
+            <div className={styles.toolsBtnContainer}>
+              <button
+                className={styles.toolsBtn}
+                data-testid="reset-teams-button"
+                onClick={handleResetBothTeams}
+              >
+                Clear
+              </button>
+              {/* <div className={styles.radioBtnDec}></div> */}
+            </div>
+            <div className={styles.toolsBtnContainer}>
+              <button
+                className={styles.toolsBtn}
+                data-testid="shuffle-teams-button"
+                onClick={handleShuffleTeams}
+              >
+                Shuffle
+              </button>
+              {/* <div className={styles.radioBtnDec}></div> */}
+            </div>
+            <div className={styles.toolsBtnContainer}>
+              <button
+                className={styles.toolsBtn}
+                data-testid="screenshot-teams-button"
+                onClick={handleScreenshot}
+              >
+                Take Screenshot
+              </button>
+              {/* <div className={styles.radioBtnDec}></div> */}
+            </div>
+          </div>
         </div>
-        <br />
-        <button data-testid="reset-teams-button" onClick={handleResetBothTeams}>
-          Clear
-        </button>
-        <br />
-        <button data-testid="shuffle-teams-button" onClick={handleShuffleTeams}>
-          Shuffle
-        </button>
-        <button
-          data-testid="screenshot-teams-button"
-          onClick={handleScreenshot}
-        >
-          Take Screenshot
-        </button>
       </div>
     </div>
   );

@@ -1,19 +1,19 @@
 import React, { createContext, useContext, useState } from "react";
 import { PlayerData } from "./types/PlayerData";
 
+type ShuffleCriterion = "kdTrials" | "kdCrucible";
+
 interface AppState {
   availablePlayers: PlayerData[];
   currentTeamA: PlayerData[];
   currentTeamB: PlayerData[];
   previousTeamA: PlayerData[];
   previousTeamB: PlayerData[];
-  rerollAttempts: number;
 
   // setAvailablePlayers: (players: PlayerData[]) => void;
   setAvailablePlayers: React.Dispatch<React.SetStateAction<PlayerData[]>>;
   setCurrentTeamA: React.Dispatch<React.SetStateAction<PlayerData[]>>;
   setCurrentTeamB: React.Dispatch<React.SetStateAction<PlayerData[]>>;
-  incrementRerollAttempts: () => void;
 }
 
 const AppContext = createContext<AppState | undefined>(undefined);
@@ -26,9 +26,6 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({
   const [currentTeamB, setCurrentTeamB] = useState<PlayerData[]>([]);
   const [previousTeamA, setPreviousTeamA] = useState<PlayerData[]>([]);
   const [previousTeamB, setPreviousTeamB] = useState<PlayerData[]>([]);
-  const [rerollAttempts, setRerollAttempts] = useState<number>(0);
-
-  const incrementRerollAttempts = () => setRerollAttempts((prev) => prev + 1);
 
   return (
     <AppContext.Provider
@@ -38,11 +35,10 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({
         currentTeamB,
         previousTeamA,
         previousTeamB,
-        rerollAttempts,
+
         setAvailablePlayers,
         setCurrentTeamA,
         setCurrentTeamB,
-        incrementRerollAttempts,
       }}
     >
       {children}

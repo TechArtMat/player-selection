@@ -1,0 +1,161 @@
+.playerRow + .playerRow {
+    margin-top: 8px;
+}
+
+.dec {
+    position: fixed;
+    height: 8300px;
+    width: 8300px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    will-change: transform;
+}
+
+ul > li {
+    /* background-color: rgba(92, 92, 92, 0.10); */
+    backdrop-filter: blur(0.8px);
+    list-style: none;
+}
+
+.availablePlayers {
+    /* background-color: rgba(92, 92, 92, 0.15); */
+    backdrop-filter: blur(0.8px);
+
+    margin: 5px 0;
+}
+
+.textH2 {
+    color: rgba(17, 34, 62, 0.6);
+    font-size: 32px;
+    font-weight: bold;
+    text-align: center;
+    margin: 0;
+}
+
+.availablePlayersContainer > * {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.addPlayerItem, .playerBaseInput, .searchPlayerInput {
+    font-size: 14px;
+}
+
+.decContainer + .searchPlayerInput, 
+.searchPlayerInput + .availablePlayers, 
+.availablePlayers + .addPlayer,
+.addPlayer + .playerBaseInput {
+    margin-top: 4px;
+}
+
+.decContainerS {
+    height: 3px;    
+}
+
+.decContainerB {
+    height: 21px;    
+}
+
+.playerBaseInput, .searchPlayerInput {
+    font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
+    display: flex;
+    background-color: rgba(92, 92, 92, 0.25);
+    border: 1px #000 solid;
+    backdrop-filter: blur(0.8px);
+    -webkit-backdrop-filter: blur(0.7px);
+    min-height: 40px;
+    box-shadow: inset 0px 0px 2px 0px rgb(0 0 0 / 20%);
+}
+
+.playerBaseInput {
+    border-radius: 0;
+    border: 1px solid rgb(0, 0, 0, 0.1); 
+    width: 394px;
+    overflow: hidden;
+    outline: none;
+}
+
+.searchPlayerInput {
+    text-align: center;
+    width: 384px;
+    padding: 0 7px;
+    border: 1px solid rgb(0, 0, 0, 0.1); 
+    outline: none;
+}
+
+.searchPlayerInput::placeholder {
+    color: rgba(255, 255, 255, 0.7);  
+}
+
+.addPlayer {
+    max-width: 400px;
+    display: grid;
+    grid-template-columns: 6fr 1fr 1fr 1fr 1fr;
+}
+
+.addPlayerItem {
+    outline: none;
+    text-align: center;
+    font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
+    border: 1px #0000002a solid;
+    backdrop-filter: blur(0.8px);
+    -webkit-backdrop-filter: blur(0.7px);
+    max-height: 40px;
+    box-shadow: inset 0px 0px 2px 0px rgb(0 0 0 / 20%);
+    color: #fff;
+}
+
+.addPlayerItem + .addPlayerItem {
+    margin-left: 1px;
+    width: 50px;
+}
+
+.addPlayer > input {
+    background-color: rgba(92, 92, 92, 0.25);
+}
+
+.addPlayer > button {
+    background-color: #A5A5A5;
+    color: #111;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.addPlayer > button:hover {
+    background-color: #c2c2c2;
+}
+
+.decColorAvlPlS {
+    background-color: #342E36;
+}
+
+.decColorAvlPlB {
+    background-color: #A7A896;
+}
+
+.availablePlayers {
+    width: 400px;
+    height: 600px;
+    max-height: 700px;
+    overflow-y: scroll;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.availablePlayers::-webkit-scrollbar {
+    display: none;
+}
+
+
+
+
+
+
+
+
+
+

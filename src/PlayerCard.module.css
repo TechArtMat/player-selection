@@ -1,0 +1,304 @@
+.playerAction {
+    z-index: 1000;
+}
+
+.playerCard + .playerCard, .slot + .slot, .playerCard + .slot {
+    margin-top: 8px;
+}
+
+.playerCard {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background-color: rgba(92, 92, 92, 0.25);
+    backdrop-filter: blur(0.8px);
+    color: #FFFFFF;
+}
+
+.playerCard {
+    position: relative;
+    cursor: pointer;
+    max-width: 400px;
+    max-height: 40px;
+    overflow: visible;
+    z-index: 1;
+    background-color: rgba(92, 92, 92, 0.25);
+    border: 0px solid white;
+}
+
+.playerCard::before {
+    content: '';
+    position: absolute;
+    opacity: 0;
+    z-index: 1; 
+    top: -1px;
+    left: -1px;
+    right: -1px;
+    bottom: -1px;
+    border: 0px solid rgb(255, 0, 0);
+}
+
+.playerCardLocked {
+    background-color: rgb(0 0 0 / 25%);
+}
+
+.playerCard::after {
+    content: '';
+    position: absolute;
+    top: -6px;
+    left: -6px;
+    right: -6px;
+    bottom: -6px;
+    opacity: 0;
+    z-index: -1; 
+}
+
+.animate-border-fade-in::before {
+    animation: FadeInUp 0.105s forwards;
+}
+
+.animate-border-fade-out::before {
+    animation: FadeOutDown 0.1s forwards;
+}
+
+@keyframes BorderTopFadeInUp {
+    0% {
+        opacity: 1;
+        border-top: 0px solid rgba(255, 255, 255, 0.5);
+        z-index: 0;
+    }
+    10% {
+        z-index: 100;
+    }
+    100% {
+        border-top: 0px solid rgba(255, 255, 255, 0.5);
+        /* border-top: 42px solid rgba(255, 255, 255, 0.5); */
+        opacity: 1;
+        z-index: 100;
+    }
+}
+
+@keyframes BorderTopFadeOutDown {
+    0% {
+        opacity: 1;
+        /* border-top: 42px solid rgba(255, 255, 255, 0.5); */
+        border-top: 0px solid rgba(255, 255, 255, 0.5);
+        z-index: 100;
+    }
+    100% {
+        border-top: 0px solid rgba(255, 255, 255, 0.5);
+        opacity: 1;
+        z-index: 0;
+    }
+}
+
+@keyframes BorderFadeInUp {
+    0% {
+        opacity: 0;
+        border: 0px solid white;
+    }
+    100% {
+        border: 2px solid white;
+        opacity: 1;
+    }
+}
+
+@keyframes BorderFadeOutDown {
+    0% {
+        border: 2px solid white;
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+        border: 0px solid white;
+    }
+  }
+    
+@keyframes fadeInUp {
+    0% {
+        opacity: 0;
+        border: 8px solid white;
+        background-color: rgba(92, 92, 92, 0.25);
+        transform: scale(1.05, 1.405);
+    }
+    50% {
+        opacity: 0.2;
+        border: 5px solid white;
+        background-color: rgba(255, 255, 255, 0.25);
+    }
+    100% {
+        border: 4px solid white;
+        background-color: rgba(255, 255, 255, 0.25);
+        opacity: 1;
+        transform: scale(1.005, 1.05);
+    }
+}
+
+@keyframes fadeOutDown {
+    0% {
+        border: 4px solid white;
+        background-color: rgba(255, 255, 255, 0.25);
+        opacity: 1;
+        transform: scale(1.0, 1.0);
+    }
+    50% {
+        opacity: 0.01;
+        border: 5px solid white;
+        background-color: rgba(255, 255, 255, 0.25);
+        transform: scale(1.025, 1.205);
+    }
+    100% {
+        opacity: 0;
+        border: 0px solid white;
+        background-color: rgba(92, 92, 92, 0.25);
+        transform: scale(0, 0);
+
+    }
+  }
+
+
+
+.playerCardAnimNone::after,
+.playerCardAnimNone::before {
+    opacity: 0 !important;
+}
+
+.animateBorderFadeIn::before {
+    animation: FadeInUp 0.105s forwards;
+}
+
+.animateBorderFadeOut::before {
+    animation: FadeOutDown 0.1s forwards;
+}
+
+.playerCardBorderFadeIn::before {
+    animation: BorderTopFadeInUp 0.5s forwards;
+}
+
+.playerCardBorderFadeOut::before {
+    animation: BorderTopFadeOutDown 0.5s forwards;
+}
+
+.playerCard:hover::after {
+    animation: fadeInUp 0.3s forwards;
+}
+
+.playerCard::after {
+    animation: fadeOutDown 0.5s forwards;
+}
+
+.playerCard:hover::before {
+    animation: BorderFadeInUp 0.06s forwards;
+}
+
+.playerCard::before {
+    animation: BorderFadeOutDown 0.105s forwards;
+}
+
+.playerCard button {
+    width: 40px;
+}
+
+.kdTrials, .kdCrucible {
+    display: block;
+    width: 40px;
+}
+
+.playerAvatar {
+    height: 40px;
+    width: 40px;
+    background-color: #738EA7;
+    grid-area: a;
+    float: left;
+}
+
+.playerAvatarBlue {
+    background-color: #738EA7;
+}
+
+.playerAvatarRed {
+    background-color: #A77373;
+}
+
+.playerName {
+    color: #FFFFFF;
+    font-size: 16px;
+    margin-left: 10px;
+}
+
+.playerClan {
+    color: #ffffff;
+    font-size: 14px;
+    opacity: 0.5;
+}
+
+.playerKd {
+    align-items: center;
+    height: inherit;
+    display: flex;
+    flex-direction: row;
+    margin-left: auto;
+}
+
+.playerKd span {
+    text-align: center;
+}
+
+.playerSwitch {
+    align-content: center;
+    height: 40px;
+    width: 40px;
+    float: right;
+    grid-area: b;
+    text-align: center;
+}
+
+/* .playerDecoration {
+    height: 40px;
+} */
+
+/* .playerDecorationS {
+    height: 20px;
+} */
+
+.playerDecoration, .playerDecorationS {
+    width: 2px;
+    background-color: rgba(53, 53, 53, 0.5);
+    /* opacity: 0.5; */
+    height: 40px;
+}
+
+.switchBtnDummy {
+    background: none;
+    border: none;
+    font-size: 20px;
+    color: #555;
+    cursor: pointer;
+    font-weight: bold;
+    height: 40px;
+    width: 40px;
+    overflow: visible;
+    z-index: 1;
+}
+
+.switchBtn {
+    background: none;
+    border: none;
+    font-size: 20px;
+    color: #555;
+    cursor: pointer;
+    font-weight: bold;
+    height: 40px;
+    overflow: visible;
+    z-index: 1;
+}
+
+.switchBtn:hover {
+    color: #333;
+    background-color: rgba(255, 255, 255, 0.25);
+    /* border-left: 2px solid white; */
+}
+
+.outTeam {
+    margin-right: 40px;
+}

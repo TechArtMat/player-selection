@@ -5,6 +5,7 @@ import { useAppContext } from "./AppContext";
 import { useEffect, useState } from "react";
 import { PlayerData } from "./types/PlayerData";
 import { importFromTextarea } from "./importFromTextarea";
+import { PlayerCard } from "./PlayerCard";
 
 export function PlayersList() {
   const {
@@ -70,50 +71,47 @@ export function PlayersList() {
   };
 
   return (
-    <div>
-      <div>
+    <div className={styles.availablePlayersContainer}>
+      <h2 className={styles.textH2}>AVAILABLE PLAYERS</h2>
+      <div className={styles.decContainer}>
+        <div
+          className={styles.decContainerS + " " + styles.decColorAvlPlS}
+        ></div>
+        <div
+          className={styles.decContainerB + " " + styles.decColorAvlPlB}
+        ></div>
+      </div>
+      <div className={styles.availablePlayersInput}>
         <label data-testid="search-players-input">
-          Search Players:
           <input
             type="text"
             value={searchValue}
             onChange={(e) => setSearchValue(e.target.value)}
+            className={styles.searchPlayerInput}
             placeholder="Search by name..."
           />
         </label>
       </div>
-
-      <ul className={styles.list} data-testid="available-players-list">
+      <ul
+        className={styles.availablePlayers}
+        data-testid="available-players-list"
+      >
         {filteredPlayers.map((playerData) => (
           <li
+            className={styles.playerRow}
             data-testid="player-row"
             key={playerData.name}
             onClick={() => addToTeam(playerData)}
           >
-            {playerData.name} {playerData.kdTrials}
+            {PlayerCard({ playerData, isInTeam: false })}
+            {/* TODO REACT <COMPONENT></COMPONENT> */}
           </li>
         ))}
       </ul>
-
-      <div>
-        <h3>Import Players Base</h3>
-        <textarea
-          data-testid="players-base-input"
-          value={textareaData}
-          onChange={(e) => setTextareaData(e.target.value)}
-          placeholder="Enter players in format: Name ClanTag K/DTrials K/DCrucible"
-        ></textarea>
-        <button
-          data-testid="players-base-submit-button"
-          onClick={handleImportFromTextarea}
-        >
-          Import Players
-        </button>
-      </div>
-
-      <div>
-        <h3>Import Player</h3>
+      <div className={styles.addPlayer}>
         <input
+          className={styles.addPlayerItem}
+          id="playerName"
           data-testid="name-input"
           type="text"
           value={inputPlayer.name}
@@ -123,6 +121,8 @@ export function PlayersList() {
           placeholder="Name"
         />
         <input
+          className={styles.addPlayerItem}
+          id="clanTag"
           data-testid="clanTag-input"
           type="text"
           value={inputPlayer.clanTag}
@@ -132,6 +132,8 @@ export function PlayersList() {
           placeholder="Clan Tag"
         />
         <input
+          className={styles.addPlayerItem}
+          id="playerKDTrials"
           data-testid="kdTrials-input"
           type="number"
           value={inputPlayer.kdTrials}
@@ -145,6 +147,8 @@ export function PlayersList() {
           placeholder="K/D Trials"
         />
         <input
+          className={styles.addPlayerItem}
+          id="playerKDCrucible"
           data-testid="kdCrucible-input"
           type="number"
           value={inputPlayer.kdCrucible}
@@ -157,8 +161,28 @@ export function PlayersList() {
           }
           placeholder="K/D Crucible"
         />
-        <button data-testid="submit-button" onClick={importFromInputs}>
+        <button
+          data-testid="submit-button"
+          className={styles.addPlayerItem}
+          onClick={importFromInputs}
+        >
           Add Player
+        </button>
+      </div>
+      <div className={styles.availablePlayersInput}>
+        <textarea
+          className={styles.playerBaseInput}
+          data-testid="players-base-input"
+          value={textareaData}
+          onChange={(e) => setTextareaData(e.target.value)}
+          placeholder="Enter players in format: Name ClanTag K/DTrials K/DCrucible"
+        ></textarea>
+        <button
+          id="importPlayers"
+          data-testid="players-base-submit-button"
+          onClick={handleImportFromTextarea}
+        >
+          Import Players
         </button>
       </div>
     </div>
