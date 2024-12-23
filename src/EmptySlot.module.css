@@ -1,6 +1,6 @@
 .slot {
     max-width: 400px;
-    background-image: url('src/button/T_Rect.png');
+    background-image: url('src/img/T_Rect.png');
     height: 40px;
     max-height: 40px;
     display: flex;
