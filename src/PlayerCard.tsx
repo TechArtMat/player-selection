@@ -12,12 +12,18 @@ export function PlayerCard({
 } & PlayerCardToolsProps) {
   return (
     <div
+      data-testid={"player-card"}
       className={styles.playerCard}
       onClick={() => onRemove && onRemove(playerData)}
     >
       <div className={styles.playerAvatar}></div>
       <div className={styles.playerInfo}>
-        <span className={styles.playerName}>{playerData.name}</span>
+        <span
+          data-testid={`player-${playerData.name.replace(/\s/g, "-")}`}
+          className={styles.playerName}
+        >
+          {playerData.name}
+        </span>
         <span className={styles.playerClan}>[{playerData.clanTag}]</span>
       </div>
       <div className={`${styles.playerKd} ${!isInTeam ? styles.outTeam : ""}`}>

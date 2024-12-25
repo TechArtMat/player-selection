@@ -9,11 +9,11 @@ export function isBalanceValid(
   const sizeA = teamA.length;
   const sizeB = teamB.length;
 
-  if (sizeA < sizeB) {
-    return avgKDA > avgKDB;
-  } else if (sizeB < sizeA) {
-    return avgKDB > avgKDA;
-  }
+  // if (sizeA < sizeB) {
+  //   return avgKDA > avgKDB;
+  // } else if (sizeB < sizeA) {
+  //   return avgKDB > avgKDA;
+  // }
   return true;
 }
 

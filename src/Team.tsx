@@ -2,6 +2,7 @@ import { PlayerCard } from "./PlayerCard";
 import { PlayerData } from "./types/PlayerData";
 import { EmptySlot } from "./EmptySlot";
 import styles from "./Teams.module.css";
+import { useEffect, useState } from "react";
 
 export type TeamProps = {
   players: PlayerData[];
@@ -14,6 +15,7 @@ export type TeamProps = {
 };
 
 export function Team(props: TeamProps) {
+  const [slots, setSlots] = useState<PlayerData[]>([]);
   const averageKD =
     props.players.length > 0
       ? props.players.reduce(
@@ -22,12 +24,15 @@ export function Team(props: TeamProps) {
         ) / props.players.length
       : 0;
 
-  const filledSlots = [...props.players];
-  const emptySlotsCount = props.maxPlayers - filledSlots.length;
+  useEffect(() => {
+    const filledSlots = [...props.players];
+    const emptySlotsCount = props.maxPlayers - filledSlots.length;
 
-  for (let i = 0; i < emptySlotsCount; i++) {
-    filledSlots.push(null as any);
-  }
+    for (let i = 0; i < emptySlotsCount; i++) {
+      filledSlots.push(null as any);
+    }
+    setSlots(filledSlots);
+  }, [props.players]);
 
   return (
     <>
@@ -42,16 +47,11 @@ export function Team(props: TeamProps) {
           ></div>
         </div>
         <ul className={styles.team}>
-          {filledSlots.map((playerData, index) => {
+          {slots.map((playerData, index) => {
             if (playerData) {
               return (
-                <li
-                  key={playerData.name}
-                  data-testid={`player-${playerData.name.replace(/\s/g, "-")}`}
-                  className={styles.playerRow}
-                >
+                <li key={playerData.name} className={styles.playerRow}>
                   <PlayerCard
-                    key={playerData.name}
                     playerData={playerData}
                     isInTeam={true}
                     onRemove={props.onRemove}
