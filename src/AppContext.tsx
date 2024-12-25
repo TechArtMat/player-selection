@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useState } from "react";
 import { PlayerData } from "./types/PlayerData";
 
-type ShuffleCriterion = "kdTrials" | "kdCrucible";
+// type ShuffleCriterion = "kdTrials" | "kdCrucible";
 
 interface AppState {
   availablePlayers: PlayerData[];
@@ -24,8 +24,10 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({
   const [availablePlayers, setAvailablePlayers] = useState<PlayerData[]>([]);
   const [currentTeamA, setCurrentTeamA] = useState<PlayerData[]>([]);
   const [currentTeamB, setCurrentTeamB] = useState<PlayerData[]>([]);
-  const [previousTeamA, setPreviousTeamA] = useState<PlayerData[]>([]);
-  const [previousTeamB, setPreviousTeamB] = useState<PlayerData[]>([]);
+  const [previousTeamA] = useState<PlayerData[]>([]);
+  // const [previousTeamA, setPreviousTeamA] = useState<PlayerData[]>([]);
+  const [previousTeamB] = useState<PlayerData[]>([]);
+  // const [previousTeamB, setPreviousTeamB] = useState<PlayerData[]>([]);
 
   return (
     <AppContext.Provider

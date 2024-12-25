@@ -20,7 +20,8 @@ export function Teams() {
   const { shuffleCriterion, handleShuffleCriterionChange } =
     useShuffleCriterion();
 
-  const [minValue, setMinValue] = useState(0.01);
+  // const [minValue, setMinValue] = useState(0.01);
+  const [minValue] = useState(0.01);
   const [maxValue, setMaxValue] = useState(0.5);
 
   const teamsConfig = [

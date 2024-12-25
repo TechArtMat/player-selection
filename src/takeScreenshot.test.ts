@@ -1,9 +1,7 @@
 import { describe, it, expect, vi, Mock } from "vitest";
 import { takeScreenshot } from "./takeScreenshot";
 import html2canvas from "html2canvas";
-import { fireEvent } from "@testing-library/dom";
 
-// Мокаем зависимости
 vi.mock("html2canvas", () => ({
   default: vi.fn(),
 }));
