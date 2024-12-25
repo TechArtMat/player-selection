@@ -4,5 +4,13 @@ jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: greet
-        run: echo "Hello World!"
+      - name: Checkout Code
+        uses: actions/checkout@v3
+      - name: Install Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18.x
+      - name: Install Dependencies
+        run: npm install
+      - name: Build Project
+        run: npm run build
