@@ -1,6 +1,6 @@
 .slot {
     max-width: 400px;
-    background-image: url('src/img/T_Rect.png');
+    background-image: url('/img/T_Rect.png');
     height: 40px;
     max-height: 40px;
     display: flex;
@@ -24,22 +24,22 @@
 }
 
 .slotDecTl {
-    background-image: url('src/img/T_Top_Left.png');
+    background-image: url('/img/T_Top_Left.png');
     float: left;
 }
 
 .slotDecTr {
-    background-image: url('src/img/T_Top_Right.png');
+    background-image: url('/img/T_Top_Right.png');
     float: right;
 }
 
 .slotDecBl {
-    background-image: url('src/img/T_Bottom_Left.png');
+    background-image: url('/img/T_Bottom_Left.png');
     float: left;
 }
 
 .slotDecBr {
-    background-image: url('src/img/T_Bottom_Right.png');
+    background-image: url('/img/T_Bottom_Right.png');
     float: right;
 }
 

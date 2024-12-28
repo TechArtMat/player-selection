@@ -217,13 +217,13 @@ input[type=range]::-moz-range-thumb {
 }
 
 .btnTrials {
-    background-image: url('src/img/emblem_osiris.png');
+    background-image: url('/img/emblem_osiris.png');
     background-size: 70px;
     background-color: #FFD45E;
 }
 
 .btnCrucible {
-    background-image: url('src/img/emblem_crucible.png');
+    background-image: url('/img/emblem_crucible.png');
     background-size: 65px;
     background-color: #FF4646;
 }
@@ -357,18 +357,6 @@ input[type=range]::-moz-range-thumb {
     background-repeat: no-repeat;
     background-position: center;
     padding: 2px;
-}
-
-.btnTrials {
-    background-image: url('emblem_osiris.png');
-    background-size: 70px;
-    background-color: #FFD45E;
-}
-
-.btnCrucible {
-    background-image: url('emblem_crucible.png');
-    background-size: 65px;
-    background-color: #FF4646;
 }
 
 .btnTrials.checked {
