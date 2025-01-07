@@ -68,7 +68,12 @@ export function PlayerCardTools({
         <button
           className={styles.switchBtn}
           data-testid={`change-team-button-${playerData.name.replace(/\s/g, "-")}`}
-          onClick={() => onSwitch && onSwitch(playerData)}
+          onClick={(event) => {
+            event.stopPropagation();
+            if (onSwitch) {
+              onSwitch(playerData);
+            }
+          }}
         >
           &#8646;
         </button>
